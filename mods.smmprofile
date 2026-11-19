@@ -1,0 +1,14 @@
+{
+  "profile": {
+    "mods": {},
+    "name": "Default",
+    "required_targets": []
+  },
+  "lockfile": {
+    "mods": {},
+    "version": 1
+  },
+  "metadata": {
+    "gameVersion": 0
+  }
+}

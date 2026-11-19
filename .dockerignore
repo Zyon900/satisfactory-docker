@@ -1,0 +1,9 @@
+.git
+.gitignore
+data
+saves
+tests
+README.md
+mods.smmprofile
+.env
+compose.yaml

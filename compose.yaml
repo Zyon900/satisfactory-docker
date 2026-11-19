@@ -1,0 +1,39 @@
+services:
+  satisfactory:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: satisfactory-docker:latest
+    container_name: satisfactory-server
+    platform: linux/amd64
+    restart: unless-stopped
+    stop_grace_period: 90s
+    ports:
+      - "${GAME_PORT:-7777}:${GAME_PORT:-7777}/udp"
+      - "${GAME_PORT:-7777}:${GAME_PORT:-7777}/tcp"
+      - "${RELIABLE_PORT:-8888}:${RELIABLE_PORT:-8888}/tcp"
+    environment:
+      GAME_PORT: ${GAME_PORT:-7777}
+      RELIABLE_PORT: ${RELIABLE_PORT:-8888}
+      EXTERNAL_RELIABLE_PORT: ${EXTERNAL_RELIABLE_PORT:-}
+      MULTIHOME: ${MULTIHOME:-0.0.0.0}
+      MAX_PLAYERS: ${MAX_PLAYERS:-}
+      AUTO_UPDATE: ${AUTO_UPDATE:-true}
+      VALIDATE_INSTALL: ${VALIDATE_INSTALL:-false}
+      STEAM_BETA: ${STEAM_BETA:-public}
+      STEAM_BETA_PASSWORD: ${STEAM_BETA_PASSWORD:-}
+      MODS_ENABLED: ${MODS_ENABLED:-true}
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      EXTRA_SERVER_ARGS: ${EXTRA_SERVER_ARGS:-}
+    volumes:
+      # Persistent saves & server settings (.sav, ServerSettings.<port>.sav)
+      - ./saves:/config/saves
+      # Persistent server installation, INI configs, and installed mods
+      - ./data/gamefiles:/config/gamefiles
+      # Persistent Unreal Saved metadata (certificates, logs, ServerManager state)
+      - ./data/saved:/config/saved
+      # Persistent ficsit-cli mod cache & registry
+      - ./data/ficsit:/config/ficsit
+      # Mod profile exported from Satisfactory Mod Manager (in same dir as compose.yaml)
+      - ${MODS_PROFILE_FILE:-./mods.smmprofile}:/config/mods.smmprofile:ro

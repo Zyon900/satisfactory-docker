@@ -1,0 +1,7 @@
+# Persistent runtime data & saves
+data/
+saves/
+
+# Local overrides
+*.local
+.DS_Store
