@@ -1,9 +1,6 @@
 services:
   satisfactory:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: satisfactory-docker:latest
+    image: ghcr.io/zyon900/satisfactory-docker:latest
     container_name: satisfactory-server
     platform: linux/amd64
     restart: unless-stopped

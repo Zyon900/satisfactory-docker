@@ -2,7 +2,7 @@ FROM debian:bookworm-slim
 
 LABEL org.opencontainers.image.title="satisfactory-docker" \
       org.opencontainers.image.description="Satisfactory Dedicated Server with auto-updates, persistent saves, and .smmprofile mod support" \
-      org.opencontainers.image.source="https://github.com/satisfactorymodding/ficsit-cli"
+      org.opencontainers.image.source="https://github.com/Zyon900/satisfactory-docker"
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG FICSIT_CLI_VERSION=latest

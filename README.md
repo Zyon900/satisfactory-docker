@@ -12,20 +12,31 @@ Dockerized **Satisfactory Dedicated Server** built on `debian:bookworm-slim` wit
 
 ## Quick Start
 
-1. **(Optional) Configure ports & settings** in [`.env`](./.env):
+You only need `docker-compose.yaml`, `.env`, and `mods.smmprofile` on your server — `docker compose` pulls the prebuilt image from GitHub Container Registry (`ghcr.io/zyon900/satisfactory-docker:latest`).
+
+1. **Download the runtime files** into a folder on your server (or clone the repo):
+   ```bash
+   mkdir -p satisfactory && cd satisfactory
+   curl -fsSLO https://raw.githubusercontent.com/Zyon900/satisfactory-docker/main/docker-compose.yaml
+   curl -fsSLO https://raw.githubusercontent.com/Zyon900/satisfactory-docker/main/.env
+   curl -fsSLO https://raw.githubusercontent.com/Zyon900/satisfactory-docker/main/mods.smmprofile
+   ```
+2. **(Optional) Configure ports & settings** in [`.env`](./.env):
    ```dotenv
    GAME_PORT=7777
    RELIABLE_PORT=8888
    ```
-2. **(Optional) Add mods** by replacing [`mods.smmprofile`](./mods.smmprofile) with your exported profile from Satisfactory Mod Manager (or point `MODS_PROFILE_FILE` in `.env` to another path).
-3. **Build and start the server**:
+3. **(Optional) Add mods** by replacing [`mods.smmprofile`](./mods.smmprofile) with your exported profile from Satisfactory Mod Manager (or point `MODS_PROFILE_FILE` in `.env` to another path).
+4. **Start the server**:
    ```bash
-   docker compose up -d --build
+   docker compose up -d
    ```
-4. **Follow startup logs** (the first launch downloads the dedicated server via SteamCMD):
+5. **Follow startup logs** (the first launch downloads the dedicated server via SteamCMD):
    ```bash
    docker compose logs -f
    ```
+
+> To build locally from source instead of pulling from GHCR, clone the repo and run `docker build -t ghcr.io/zyon900/satisfactory-docker:latest .`.
 
 ## Configuration (`.env`)
 
