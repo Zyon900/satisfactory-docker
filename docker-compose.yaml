@@ -35,5 +35,5 @@ services:
       - ./data/saved:/config/saved
       # Persistent ficsit-cli mod cache & registry
       - ./data/ficsit:/config/ficsit
-      # Mod profile exported from Satisfactory Mod Manager (in same dir as compose.yaml)
+      # Mod profile exported from Satisfactory Mod Manager (in same dir as docker-compose.yaml)
       - ${MODS_PROFILE_FILE:-./mods.smmprofile}:/config/mods.smmprofile:ro

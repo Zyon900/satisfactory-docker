@@ -6,7 +6,7 @@ Dockerized **Satisfactory Dedicated Server** built on `debian:bookworm-slim` wit
 - **Persistent saves & server state** — maps `./saves` directly to Unreal's `SaveGames` directory and persists game files, INI configs, and server state in `./data`
 - **Auto-restarts & graceful shutdown** — uses `restart: unless-stopped` and forwards `SIGTERM` with a `90s` grace period so the world saves cleanly
 - **Configurable ports** — configure `GAME_PORT`, `RELIABLE_PORT`, and optional `EXTERNAL_RELIABLE_PORT` in `.env`
-- **Mod Manager profile support (`mods.smmprofile`)** — drop your exported `.smmprofile` next to `compose.yaml` and `ficsit-cli` automatically resolves and installs SML and server-compatible mods
+- **Mod Manager profile support (`mods.smmprofile`)** — drop your exported `.smmprofile` next to `docker-compose.yaml` and `ficsit-cli` automatically resolves and installs SML and server-compatible mods
 
 > **Architecture note:** Satisfactory Dedicated Server on Linux is `linux/amd64` only.
 
@@ -40,7 +40,7 @@ Dockerized **Satisfactory Dedicated Server** built on `debian:bookworm-slim` wit
 | `VALIDATE_INSTALL` | `false` | Forces `validate` on every SteamCMD check (first install always validates). |
 | `STEAM_BETA` | `public` | Steam branch (`public` or `experimental`). |
 | `STEAM_BETA_PASSWORD` | *(empty)* | Optional Steam beta branch password. |
-| `MODS_PROFILE_FILE` | `./mods.smmprofile` | Path to your `.smmprofile` file relative to `compose.yaml` (or absolute). |
+| `MODS_PROFILE_FILE` | `./mods.smmprofile` | Path to your `.smmprofile` file relative to `docker-compose.yaml` (or absolute). |
 | `MODS_ENABLED` | `true` | Set to `false` to disable all mods and restore vanilla mode without removing `mods.smmprofile`. |
 | `PUID` / `PGID` | `1000` / `1000` | Host UID/GID used for ownership of `./saves` and `./data`. |
 | `EXTRA_SERVER_ARGS` | *(empty)* | Extra flags appended to `FactoryServer.sh`. |
@@ -64,7 +64,7 @@ Forward and allow both ports on your host firewall and router:
 ## Mod Support (`mods.smmprofile`)
 
 1. In **Satisfactory Mod Manager**, export your mod profile (`Export Profile` -> saves a `.smmprofile` file).
-2. Save or overwrite `./mods.smmprofile` in the same directory as `compose.yaml` (or set `MODS_PROFILE_FILE` in `.env`).
+2. Save or overwrite `./mods.smmprofile` in the same directory as `docker-compose.yaml` (or set `MODS_PROFILE_FILE` in `.env`).
 3. Start or restart the container (`docker compose restart`).
 
 On startup, `sync-mods.sh` parses `mods.smmprofile` (supporting SMM3 `.smmprofile` JSON with optional lockfile, bare `{ "mods": ... }` JSON, and legacy SMM2 `.smmprofile` zip archives), configures `ficsit-cli`, installs SML and all enabled `LinuxServer`-compatible mods, and skips client-only mods automatically. Leaving `mods.smmprofile` empty (the default) or setting `MODS_ENABLED=false` cleans up mods and runs vanilla.
