@@ -69,6 +69,10 @@ COPY scripts/sync-mods.sh /usr/local/bin/sync-mods.sh
 COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 RUN chmod 0755 /usr/local/bin/entrypoint.sh /usr/local/bin/sync-mods.sh /usr/local/bin/healthcheck.sh
 
+COPY patches/SML-LinuxServer.zip /opt/sml-override/SML-LinuxServer.zip
+RUN chmod 0644 /opt/sml-override/SML-LinuxServer.zip
+ENV SML_OVERRIDE_ZIP=/opt/sml-override/SML-LinuxServer.zip
+
 RUN mkdir -p "${SERVER_DIR}" "${SAVES_DIR}" "${SAVED_DIR}" "${FICSIT_LOCAL_DIR}" "${FICSIT_CACHE_DIR}" \
     && chown -R steam:steam /config
 

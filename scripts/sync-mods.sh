@@ -7,6 +7,7 @@ MODS_ENABLED="${MODS_ENABLED:-true}"
 FICSIT_BIN="${FICSIT_BIN:-ficsit}"
 FICSIT_LOCAL_DIR="${FICSIT_LOCAL_DIR:-/config/ficsit/local}"
 FICSIT_CACHE_DIR="${FICSIT_CACHE_DIR:-/config/ficsit/cache}"
+SML_OVERRIDE_ZIP="${SML_OVERRIDE_ZIP:-/opt/sml-override/SML-LinuxServer.zip}"
 
 log() {
     printf '[mods] %s\n' "$*"
@@ -245,6 +246,11 @@ sync_mods() {
             err "Failed to apply mods from ${MODS_PROFILE_PATH}."
             return 1
         fi
+    fi
+
+    if [[ -n "${SML_OVERRIDE_ZIP}" && -f "${SML_OVERRIDE_ZIP}" && -d "${SERVER_DIR}/FactoryGame/Mods/SML" ]]; then
+        log "Applying custom SML override from ${SML_OVERRIDE_ZIP}..."
+        unzip -qo "${SML_OVERRIDE_ZIP}" -d "${SERVER_DIR}/FactoryGame/Mods/SML"
     fi
 
     printf '%s\n' "${profile_hash}" > "${FICSIT_LOCAL_DIR}/.smmprofile.sha256"
